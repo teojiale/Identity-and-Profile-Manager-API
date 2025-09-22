@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html class="h-full bg-white">
+    <head>
+        {% load static %}
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Log In</title>
+        <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    </head>
+    <body class="h-full">
+<div class="flex min-h-full items-center justify-center px-4 py-12 sm:px-6 lg:px-8">
+    <div class="w-full max-w-sm space-y-10">
+      <div>
+        <a href="/" class="h-10 w-auto flex justify-center">
+<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-10 stroke-indigo-600">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M7.864 4.243A7.5 7.5 0 0 1 19.5 10.5c0 2.92-.556 5.709-1.568 8.268M5.742 6.364A7.465 7.465 0 0 0 4.5 10.5a7.464 7.464 0 0 1-1.15 3.993m1.989 3.559A11.209 11.209 0 0 0 8.25 10.5a3.75 3.75 0 1 1 7.5 0c0 .527-.021 1.049-.064 1.565M12 10.5a14.94 14.94 0 0 1-3.6 9.75m6.633-4.596a18.666 18.666 0 0 1-2.485 5.33" />
+                </svg>
+        </a>
+        <h2 class="mt-10 text-center text-2xl/9 font-bold tracking-tight text-gray-900">Sign in to your account</h2>
+      </div>
+      <form class="space-y-6" id="login-form">
+        <div>
+          <div class="col-span-2">
+            <input id="username" name="username" type="text" autocomplete="username" required aria-label="Username" class="block w-full rounded-t-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:relative focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" placeholder="Username">
+          </div>
+          <div class="-mt-px">
+            <input id="password" name="password" type="password" autocomplete="current-password" required aria-label="Password" class="block w-full rounded-b-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:relative focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" placeholder="Password">
+          </div>
+        </div>
+  
+        <div>
+          <button id="signin-btn" type="submit" class="flex w-full items-center justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-50 disabled:cursor-not-allowed" aria-disabled="false">
+            <span id="spinner" class="mr-2" aria-hidden="true" style="display:none;">
+              <svg class="animate-spin h-5 w-5 text-white" viewBox="0 0 24 24" fill="none">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+              </svg>
+            </span>
+            <span id="btn-text">Sign in</span>
+          </button>
+        </div>
+      </form>
+  
+      <p class="text-center text-sm/6 text-gray-500">
+        New user?
+        <a href="{% url 'register' %}" class="font-semibold text-indigo-600 hover:text-indigo-500">Sign Up</a>
+      </p>
+            <div id="error-msg-container" class="mt-4" style="display: none;">
+                <div class="rounded-md bg-red-50 p-4">
+                    <div class="flex">
+                        <div class="shrink-0">
+                          <svg class="size-5 text-red-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16ZM8.28 7.22a.75.75 0 0 0-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 1 0 1.06 1.06L10 11.06l1.72 1.72a.75.75 0 1 0 1.06-1.06L11.06 10l1.72-1.72a.75.75 0 0 0-1.06-1.06L10 8.94 8.28 7.22Z" clip-rule="evenodd" />
+                          </svg>
+                        </div>
+                        <div class="ml-3">
+                            <p id="error-msg" class="text-sm font-medium text-red-800"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+    </div>
+  </div>
+
+<!-- CSRF token form for AJAX requests -->
+<form id="csrf-form" style="display: none;">{% csrf_token %}</form>
+
+<script>
+            const form = document.getElementById('login-form');
+            const errorMsg = document.getElementById('error-msg');
+            const errorMsgContainer = document.getElementById('error-msg-container');
+            const signInBtn = document.getElementById('signin-btn');
+            const spinner = document.getElementById('spinner');
+            const btnText = document.getElementById('btn-text');
+            const usernameInput = document.getElementById('username');
+            const passwordInput = document.getElementById('password');
+            // autofocus first input on load
+            if (usernameInput) {
+                usernameInput.focus();
+            }
+
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                errorMsg.textContent = '';
+                errorMsgContainer.style.display = 'none';
+                // set loading state
+                signInBtn.disabled = true;
+                signInBtn.setAttribute('aria-disabled', 'true');
+                spinner.style.display = 'inline-flex';
+                btnText.textContent = 'Signing in...';
+                usernameInput.disabled = true;
+                passwordInput.disabled = true;
+
+                const username = document.getElementById('username').value;
+                const password = document.getElementById('password').value;
+
+
+                try {
+                    // Get CSRF token from the hidden form
+                    function getCSRFToken() {
+                        const csrfForm = document.getElementById('csrf-form');
+                        if (csrfForm) {
+                            const csrfInput = csrfForm.querySelector('input[name="csrfmiddlewaretoken"]');
+                            return csrfInput ? csrfInput.value : null;
+                        }
+                        return null;
+                    }
+
+                    const response = await fetch('/api/auth/login/', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': getCSRFToken(),
+                        },
+                        body: JSON.stringify({ username, password }),
+                    });
+
+                    const data = await response.json();
+
+                    if (response.ok) {
+                        // Tokens are now stored securely in httpOnly cookies
+                        // No need to handle them in JavaScript
+                        window.location.href = '/';
+                    } else {
+                        errorMsg.textContent = data.detail || 'Login failed: ' + JSON.stringify(data);
+                        errorMsgContainer.style.display = 'block';
+                        // unset loading state
+                        signInBtn.disabled = false;
+                        signInBtn.setAttribute('aria-disabled', 'false');
+                        spinner.style.display = 'none';
+                        btnText.textContent = 'Sign in';
+                        usernameInput.disabled = false;
+                        passwordInput.disabled = false;
+                    }
+                } catch (err) {
+                    console.error('Error during login:', err);
+                    errorMsg.textContent = 'An error occurred: ' + err.message;
+                    errorMsgContainer.style.display = 'block';
+                    // unset loading state
+                    signInBtn.disabled = false;
+                    signInBtn.setAttribute('aria-disabled', 'false');
+                    spinner.style.display = 'none';
+                    btnText.textContent = 'Sign in';
+                    usernameInput.disabled = false;
+                    passwordInput.disabled = false;
+                }
+            });
+</script>
+</body>
+</html>
+

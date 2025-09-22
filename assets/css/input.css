@@ -1,0 +1,36 @@
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
+@font-face {
+    font-family: "Haskoy";
+    src: url("/static/fonts/Haskoy-variable.woff2") format("woff2-variations"),
+         url("/static/fonts/Haskoy-variable.woff2") format("woff2");
+    font-weight: 100 900; /* full weight range */
+    font-stretch: 75% 125%; /* optional if your font supports width variation */
+    font-style: normal;
+  }
+
+@theme {
+    --font-sans: "Haskoy", sans-serif;
+}
+
+/* Custom form select styling */
+.form-select-custom {
+    @apply col-start-1 row-start-1 w-full appearance-none rounded-md bg-white py-1.5 pr-7 truncate pl-3 text-gray-600 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 text-base sm:text-sm/5;
+}
+
+.form-input-custom {
+    @apply block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6;
+}
+
+.form-textarea-custom {
+    @apply block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6;
+}
+
+.form-number-input-custom {
+    @apply block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6;
+}
+
+.visibility-select {
+    @apply max-w-24 sm:max-w-full;
+}

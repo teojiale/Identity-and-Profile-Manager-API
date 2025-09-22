@@ -1,0 +1,30 @@
+{
+  "name": "identityandprofilemanagerapi",
+  "version": "1.0.0",
+  "description": "This project is a small identity management service built with Django, Django REST Framework (DRF), and JSON Web Tokens (JWT) using SimpleJWT. It lets users register, authenticate, and maintain an identity profile with multiple name variants. Other authenticated users can search for profiles and, based on explicit consent records, see limited profile fields. A minimal set of HTML pages provides a simple login/register flow and a search UI that calls the API.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:css": "tailwindcss -i assets/css/input.css -o static/css/styles.css",
+    "watch:css": "tailwindcss -i assets/css/input.css -o static/css/styles.css --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ammakr/identity-and-profile-manager.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/ammakr/identity-and-profile-manager/issues"
+  },
+  "homepage": "https://github.com/ammakr/identity-and-profile-manager#readme",
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.1.11",
+    "autoprefixer": "^10.4.21",
+    "postcss": "^8.5.6",
+    "postcss-cli": "^11.0.1",
+    "tailwindcss": "^4.1.11"
+  }
+}

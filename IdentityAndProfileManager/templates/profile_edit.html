@@ -1,0 +1,646 @@
+<!-- profile_edit.html -->
+{% extends 'base.html' %}
+
+{% block title %}Edit Profile - {{ user.username }}{% endblock %}
+
+{% block main_classes %}pt-16{% endblock %}
+
+{% block content %}
+<div class="mx-auto max-w-4xl px-4 py-10 sm:px-6 lg:px-8">
+  <!-- Header -->
+  <div class="mb-8">
+    <div class="flex items-center gap-x-8 pb-8 border-b border-gray-200">
+      <div>
+        <h1 class="text-2xl font-semibold text-gray-900">Edit Profile</h1>
+        <p class="text-base text-gray-500 mt-1">Manage your personal information and privacy settings.</p>
+      </div>
+    </div>
+  </div>
+
+  
+  
+
+  <div class="rounded-md bg-indigo-50 p-4 mb-4">
+    <div class="flex flex-col sm:flex-row">
+      <div class="shrink-0">
+        <svg class="size-5 text-indigo-400" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+          </svg>
+      </div>
+      <div class="ml-0 sm:ml-3 mt-4 sm:mt-0">
+        <h3 class="text-sm font-medium text-indigo-800">Privacy Settings</h3>
+        <div class="mt-2 text-sm text-indigo-700">
+          <ul role="list" class="list-disc space-y-1 pl-5">
+            <li><span class="font-semibold">Public.</span> Anyone can see this information</li>
+            <li><span class="font-semibold">Admin Only.</span> Only administrators can see this information</li>
+            <li><span class="font-semibold">Private.</span> Only you can see this information</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Form -->
+  <form method="post" class="space-y-8">
+    {% csrf_token %}
+
+    <!-- Basic Information Section -->
+    <div class="bg-white rounded-lg py-4">
+      <div class="px-4 sm:px-0">
+        <h3 class="text-base/7 font-semibold text-gray-900">Basic Information</h3>
+        <p class="mt-1 max-w-2xl text-sm/6 text-gray-500">Your basic personal information.</p>
+      </div>
+      <div class="mt-6">
+        <div class="divide-y divide-gray-100">
+
+          <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+            <label for="{{ form.email.id_for_label }}" class="text-sm/6 font-medium text-gray-900">
+             Email
+            </label>
+            <div class="mt-1 flex text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0">
+              <span class="grow">
+                {{ form.email }}
+                {% if form.email.errors %}
+                  <div class="field-error text-red-600 text-sm mt-1">
+                    {% for error in form.email.errors %}
+                      {{ error }}<br>
+                    {% endfor %}
+                  </div>
+                {% endif %}
+              </span>
+              <span class="ml-4 shrink-0">
+                <div class="grid grid-cols-1">
+                  {{ form.email_visibility }}
+                  <svg class="pointer-events-none col-start-1 row-start-1 mr-2 size-5 self-center justify-self-end text-gray-500 sm:size-4" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" data-slot="icon">
+                    <path fill-rule="evenodd" d="M4.22 6.22a.75.75 0 0 1 1.06 0L8 8.94l2.72-2.72a.75.75 0 1 1 1.06 1.06l-3.25 3.25a.75.75 0 0 1-1.06 0L4.22 7.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+                  </svg>
+                </div>
+              </span>
+            </div>
+          </div>
+
+          <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+            <label for="{{ form.occupation.id_for_label }}" class="text-sm/6 font-medium text-gray-900">
+              Occupation
+            </label>
+            <div class="mt-1 flex text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0">
+              <span class="grow">
+                {{ form.occupation }}
+                {% if form.occupation.errors %}
+                  <div class="field-error text-red-600 text-sm mt-1">
+                    {% for error in form.occupation.errors %}
+                      {{ error }}<br>
+                    {% endfor %}
+                  </div>
+                {% endif %}
+              </span>
+              <span class="ml-4 shrink-0">
+                <div class="grid grid-cols-1">
+                  {{ form.occupation_visibility }}
+                  <svg class="pointer-events-none col-start-1 row-start-1 mr-2 size-5 self-center justify-self-end text-gray-500 sm:size-4" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" data-slot="icon">
+                    <path fill-rule="evenodd" d="M4.22 6.22a.75.75 0 0 1 1.06 0L8 8.94l2.72-2.72a.75.75 0 1 1 1.06 1.06l-3.25 3.25a.75.75 0 0 1-1.06 0L4.22 7.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+                  </svg>
+                </div>
+              </span>
+            </div>
+          </div>
+
+          <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+            <label for="{{ form.age.id_for_label }}" class="text-sm/6 font-medium text-gray-900">
+              Age
+            </label>
+            <div class="mt-1 flex text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0">
+              <span class="grow">
+                {{ form.age }}
+                {% if form.age.errors %}
+                  <div class="field-error text-red-600 text-sm mt-1">
+                    {% for error in form.age.errors %}
+                      {{ error }}<br>
+                    {% endfor %}
+                  </div>
+                {% endif %}
+              </span>
+              <span class="ml-4 shrink-0">
+                <div class="grid grid-cols-1">
+                  {{ form.age_visibility }}
+                  <svg class="pointer-events-none col-start-1 row-start-1 mr-2 size-5 self-center justify-self-end text-gray-500 sm:size-4" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" data-slot="icon">
+                    <path fill-rule="evenodd" d="M4.22 6.22a.75.75 0 0 1 1.06 0L8 8.94l2.72-2.72a.75.75 0 1 1 1.06 1.06l-3.25 3.25a.75.75 0 0 1-1.06 0L4.22 7.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+                  </svg>
+                </div>
+              </span>
+            </div>
+          </div>
+
+          <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+            <label for="{{ form.gender_identity.id_for_label }}" class="text-sm/6 font-medium text-gray-900">
+              Gender Identity
+            </label>
+            <div class="mt-1 flex text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0">
+              <span class="grow">
+                {{ form.gender_identity }}
+                {% if form.gender_identity.errors %}
+                  <div class="field-error text-red-600 text-sm mt-1">
+                    {% for error in form.gender_identity.errors %}
+                      {{ error }}<br>
+                    {% endfor %}
+                  </div>
+                {% endif %}
+              </span>
+              <span class="ml-4 shrink-0">
+                <div class="grid grid-cols-1">
+                  {{ form.gender_identity_visibility }}
+                  <svg class="pointer-events-none col-start-1 row-start-1 mr-2 size-5 self-center justify-self-end text-gray-500 sm:size-4" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" data-slot="icon">
+                    <path fill-rule="evenodd" d="M4.22 6.22a.75.75 0 0 1 1.06 0L8 8.94l2.72-2.72a.75.75 0 1 1 1.06 1.06l-3.25 3.25a.75.75 0 0 1-1.06 0L4.22 7.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+                  </svg>
+                </div>
+              </span>
+            </div>
+          </div>
+
+          <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+            <label for="{{ form.pronoun.id_for_label }}" class="text-sm/6 font-medium text-gray-900">
+              Pronoun
+            </label>
+            <div class="mt-1 flex text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0">
+              <span class="grow">
+                {{ form.pronoun }}
+                {% if form.pronoun.errors %}
+                  <div class="field-error text-red-600 text-sm mt-1">
+                    {% for error in form.pronoun.errors %}
+                      {{ error }}<br>
+                    {% endfor %}
+                  </div>
+                {% endif %}
+              </span>
+              <span class="ml-4 shrink-0">
+                <div class="grid grid-cols-1">
+                  {{ form.pronoun_visibility }}
+                  <svg class="pointer-events-none col-start-1 row-start-1 mr-2 size-5 self-center justify-self-end text-gray-500 sm:size-4" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" data-slot="icon">
+                    <path fill-rule="evenodd" d="M4.22 6.22a.75.75 0 0 1 1.06 0L8 8.94l2.72-2.72a.75.75 0 1 1 1.06 1.06l-3.25 3.25a.75.75 0 0 1-1.06 0L4.22 7.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+                  </svg>
+                </div>
+              </span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Names Section -->
+    <div class="bg-white rounded-lg py-4">
+      <div class="px-4 sm:px-0">
+        <h3 class="text-base/7 font-semibold text-gray-900">Names</h3>
+        <p class="mt-1 max-w-2xl text-sm/6 text-gray-500">Your various names and their visibility settings.</p>
+      </div>
+      <div class="mt-6">
+        <div class="divide-y divide-gray-100">
+
+          <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+            <label for="{{ form.legal_name.id_for_label }}" class="text-sm/6 font-medium text-gray-900">
+              Legal Name
+            </label>
+            <div class="mt-1 flex text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0">
+              <span class="grow">
+                {{ form.legal_name }}
+                {% if form.legal_name.errors %}
+                  <div class="field-error text-red-600 text-sm mt-1">
+                    {% for error in form.legal_name.errors %}
+                      {{ error }}<br>
+                    {% endfor %}
+                  </div>
+                {% endif %}
+              </span>
+              <span class="ml-4 shrink-0">
+                <div class="grid grid-cols-1">
+                  {{ form.legal_name_visibility }}
+                  <svg class="pointer-events-none col-start-1 row-start-1 mr-2 size-5 self-center justify-self-end text-gray-500 sm:size-4" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" data-slot="icon">
+                    <path fill-rule="evenodd" d="M4.22 6.22a.75.75 0 0 1 1.06 0L8 8.94l2.72-2.72a.75.75 0 1 1 1.06 1.06l-3.25 3.25a.75.75 0 0 1-1.06 0L4.22 7.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+                  </svg>
+                </div>
+              </span>
+            </div>
+          </div>
+
+          <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+            <label for="{{ form.birth_name.id_for_label }}" class="text-sm/6 font-medium text-gray-900">
+              Birth Name
+            </label>
+            <div class="mt-1 flex text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0">
+              <span class="grow">
+                {{ form.birth_name }}
+                {% if form.birth_name.errors %}
+                  <div class="field-error text-red-600 text-sm mt-1">
+                    {% for error in form.birth_name.errors %}
+                      {{ error }}<br>
+                    {% endfor %}
+                  </div>
+                {% endif %}
+              </span>
+              <span class="ml-4 shrink-0">
+                <div class="grid grid-cols-1">
+                  {{ form.birth_name_visibility }}
+                  <svg class="pointer-events-none col-start-1 row-start-1 mr-2 size-5 self-center justify-self-end text-gray-500 sm:size-4" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" data-slot="icon">
+                    <path fill-rule="evenodd" d="M4.22 6.22a.75.75 0 0 1 1.06 0L8 8.94l2.72-2.72a.75.75 0 1 1 1.06 1.06l-3.25 3.25a.75.75 0 0 1-1.06 0L4.22 7.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+                  </svg>
+                </div>
+              </span>
+            </div>
+          </div>
+
+          <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+            <label for="{{ form.native_name.id_for_label }}" class="text-sm/6 font-medium text-gray-900">
+              Native Name
+            </label>
+            <div class="mt-1 flex text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0">
+              <span class="grow">
+                {{ form.native_name }}
+                {% if form.native_name.errors %}
+                  <div class="field-error text-red-600 text-sm mt-1">
+                    {% for error in form.native_name.errors %}
+                      {{ error }}<br>
+                    {% endfor %}
+                  </div>
+                {% endif %}
+              </span>
+              <span class="ml-4 shrink-0">
+                <div class="grid grid-cols-1">
+                  {{ form.native_name_visibility }}
+                  <svg class="pointer-events-none col-start-1 row-start-1 mr-2 size-5 self-center justify-self-end text-gray-500 sm:size-4" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" data-slot="icon">
+                    <path fill-rule="evenodd" d="M4.22 6.22a.75.75 0 0 1 1.06 0L8 8.94l2.72-2.72a.75.75 0 1 1 1.06 1.06l-3.25 3.25a.75.75 0 0 1-1.06 0L4.22 7.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+                  </svg>
+                </div>
+              </span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Contact Information Section -->
+    <div class="bg-white rounded-lg py-4">
+      <div class="px-4 sm:px-0">
+        <h3 class="text-base/7 font-semibold text-gray-900">Contact Information</h3>
+        <p class="mt-1 max-w-2xl text-sm/6 text-gray-500">Your contact details and emergency information.</p>
+      </div>
+      <div class="mt-6">
+        <div class="divide-y divide-gray-100">
+
+          <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+            <label for="{{ form.home_address.id_for_label }}" class="text-sm/6 font-medium text-gray-900">
+              Home Address
+            </label>
+            <div class="mt-1 flex text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0">
+              <span class="grow">
+                {{ form.home_address }}
+                {% if form.home_address.errors %}
+                  <div class="field-error text-red-600 text-sm mt-1">
+                    {% for error in form.home_address.errors %}
+                      {{ error }}<br>
+                    {% endfor %}
+                  </div>
+                {% endif %}
+              </span>
+              <span class="ml-4 shrink-0">
+                <div class="grid grid-cols-1">
+                  {{ form.home_address_visibility }}
+                  <svg class="pointer-events-none col-start-1 row-start-1 mr-2 size-5 self-center justify-self-end text-gray-500 sm:size-4" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" data-slot="icon">
+                    <path fill-rule="evenodd" d="M4.22 6.22a.75.75 0 0 1 1.06 0L8 8.94l2.72-2.72a.75.75 0 1 1 1.06 1.06l-3.25 3.25a.75.75 0 0 1-1.06 0L4.22 7.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+                  </svg>
+                </div>
+              </span>
+            </div>
+          </div>
+
+          <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+            <label for="{{ form.emergency_contact.id_for_label }}" class="text-sm/6 font-medium text-gray-900">
+              Emergency Contact
+            </label>
+            <div class="mt-1 flex text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0">
+              <span class="grow">
+                {{ form.emergency_contact }}
+                {% if form.emergency_contact.errors %}
+                  <div class="field-error text-red-600 text-sm mt-1">
+                    {% for error in form.emergency_contact.errors %}
+                      {{ error }}<br>
+                    {% endfor %}
+                  </div>
+                {% endif %}
+              </span>
+              <span class="ml-4 shrink-0">
+                <div class="grid grid-cols-1">
+                {{ form.emergency_contact_visibility }}
+                  <svg class="pointer-events-none col-start-1 row-start-1 mr-2 size-5 self-center justify-self-end text-gray-500 sm:size-4" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" data-slot="icon">
+                    <path fill-rule="evenodd" d="M4.22 6.22a.75.75 0 0 1 1.06 0L8 8.94l2.72-2.72a.75.75 0 1 1 1.06 1.06l-3.25 3.25a.75.75 0 0 1-1.06 0L4.22 7.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+                  </svg>
+                </div>
+              </span>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Form Actions -->
+    <div class="bg-white rounded-lg">
+      <div class="px-4 py-6 sm:px-0">
+        <div class="flex justify-end gap-4">
+          <a href="{% url 'profile_detail' request.user.username %}" class="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+            Cancel
+          </a>
+          <button type="submit" class="px-6 py-2 bg-indigo-600 border border-transparent rounded-md text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+            Save Changes
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+
+
+</div>
+
+{% block scripts %}
+<script>
+// Validation rules matching server-side validation
+if (typeof window.validationRules === 'undefined') {
+  window.validationRules = {
+  email: {
+    pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+    maxLength: 254,
+    messages: {
+      required: 'Email address is required',
+      invalid: 'Please enter a valid email address',
+      tooLong: 'Email address is too long (maximum 254 characters)',
+      invalidChars: 'Email address contains invalid characters'
+    }
+  },
+  occupation: {
+    maxLength: 100,
+    messages: {
+      tooLong: 'Occupation description is too long (maximum 100 characters)'
+    }
+  },
+  age: {
+    min: 13,
+    max: 150,
+    messages: {
+      invalid: 'Please enter a valid age',
+      tooYoung: 'You must be at least 13 years old to use this service',
+      tooOld: 'Age cannot exceed 150 years'
+    }
+  },
+  gender_identity: {
+    maxLength: 100,
+    messages: {
+      tooLong: 'Gender identity description is too long (maximum 100 characters)'
+    }
+  },
+  pronoun: {
+    pattern: /^[a-zA-Z/]{1,20}$/,
+    messages: {
+      invalid: 'Pronouns should be in format like "he/him" or "they/them"'
+    }
+  },
+  legal_name: {
+    pattern: /^[a-zA-Z\s\-']+$/,
+    maxLength: 100,
+    messages: {
+      invalid: 'Name can only contain letters, spaces, hyphens, and apostrophes',
+      tooLong: 'Legal name is too long (maximum 100 characters)'
+    }
+  },
+  birth_name: {
+    pattern: /^[a-zA-Z\s\-']+$/,
+    maxLength: 100,
+    messages: {
+      invalid: 'Name can only contain letters, spaces, hyphens, and apostrophes',
+      tooLong: 'Birth name is too long (maximum 100 characters)'
+    }
+  },
+  native_name: {
+    pattern: /^[a-zA-Z\s\-']+$/,
+    maxLength: 100,
+    messages: {
+      invalid: 'Name can only contain letters, spaces, hyphens, and apostrophes',
+      tooLong: 'Native name is too long (maximum 100 characters)'
+    }
+  },
+  home_address: {
+    minLength: 10,
+    maxLength: 500,
+    messages: {
+      tooShort: 'Please provide a complete address',
+      tooLong: 'Address is too long (maximum 500 characters)'
+    }
+  },
+  emergency_contact: {
+    maxLength: 200,
+    messages: {
+      tooLong: 'Emergency contact information is too long (maximum 200 characters)'
+    }
+  },
+  phone_number: {
+    pattern: /^[\+]?[1-9][\d]{9,14}$/,
+    minDigits: 10,
+    maxDigits: 15,
+    messages: {
+      invalid: 'Please enter a valid phone number',
+      tooShort: 'Phone number must be at least 10 digits',
+      tooLong: 'Phone number cannot exceed 15 digits'
+    }
+  }
+};
+}
+
+// Utility functions
+function showError(field, message) {
+  const fieldElement = document.querySelector(`[name="${field}"]`);
+  if (!fieldElement) return;
+
+  // Remove existing error
+  const existingError = fieldElement.parentNode.querySelector('.field-error');
+  if (existingError) {
+    existingError.remove();
+  }
+
+  // Add error class to field
+  fieldElement.classList.add('field-invalid');
+  fieldElement.classList.remove('field-valid');
+
+  // Create and show error message
+  const errorDiv = document.createElement('div');
+  errorDiv.className = 'field-error text-red-600 text-sm mt-1';
+  errorDiv.textContent = message;
+  fieldElement.parentNode.appendChild(errorDiv);
+}
+
+function showSuccess(field) {
+  const fieldElement = document.querySelector(`[name="${field}"]`);
+  if (!fieldElement) return;
+
+  // Remove existing error
+  const existingError = fieldElement.parentNode.querySelector('.field-error');
+  if (existingError) {
+    existingError.remove();
+  }
+
+  // Add success class to field
+  fieldElement.classList.add('field-valid');
+  fieldElement.classList.remove('field-invalid');
+}
+
+function clearValidation(field) {
+  const fieldElement = document.querySelector(`[name="${field}"]`);
+  if (!fieldElement) return;
+
+  // Remove existing error
+  const existingError = fieldElement.parentNode.querySelector('.field-error');
+  if (existingError) {
+    existingError.remove();
+  }
+
+  // Remove validation classes
+  fieldElement.classList.remove('field-valid', 'field-invalid');
+}
+
+// Validation functions
+function validateField(fieldName, value) {
+  const rules = window.validationRules[fieldName];
+  if (!rules) return true;
+
+  // Skip validation if field is empty (no required fields)
+  if (!value) {
+    clearValidation(fieldName);
+    return true;
+  }
+
+  // Email validation
+  if (fieldName === 'email') {
+    if (value.length > rules.maxLength) {
+      showError(fieldName, rules.messages.tooLong);
+      return false;
+    }
+    if (/[<>]/.test(value)) {
+      showError(fieldName, rules.messages.invalidChars);
+      return false;
+    }
+    if (!rules.pattern.test(value)) {
+      showError(fieldName, rules.messages.invalid);
+      return false;
+    }
+  }
+
+  // Age validation
+  if (fieldName === 'age') {
+    const age = parseInt(value);
+    if (value && (isNaN(age) || age < rules.min || age > rules.max)) {
+      showError(fieldName, age < rules.min ? rules.messages.tooYoung : rules.messages.tooOld);
+      return false;
+    }
+  }
+
+  // Length validations
+  if (rules.maxLength && value.length > rules.maxLength) {
+    showError(fieldName, rules.messages.tooLong);
+    return false;
+  }
+
+  if (rules.minLength && value.length < rules.minLength) {
+    showError(fieldName, rules.messages.tooShort);
+    return false;
+  }
+
+  // Pattern validations
+  if (rules.pattern && !rules.pattern.test(value)) {
+    showError(fieldName, rules.messages.invalid);
+    return false;
+  }
+
+  // Phone number specific validation
+  if (fieldName === 'phone_number') {
+    const digitsOnly = value.replace(/\D/g, '');
+    if (digitsOnly.length < rules.minDigits) {
+      showError(fieldName, rules.messages.tooShort);
+      return false;
+    }
+    if (digitsOnly.length > rules.maxDigits) {
+      showError(fieldName, rules.messages.tooLong);
+      return false;
+    }
+  }
+
+  showSuccess(fieldName);
+  return true;
+}
+
+function validateForm() {
+  let isValid = true;
+  const fieldsToValidate = ['email', 'occupation', 'age', 'gender_identity', 'pronoun',
+                          'legal_name', 'birth_name', 'native_name', 'home_address',
+                          'emergency_contact', 'phone_number'];
+
+  fieldsToValidate.forEach(fieldName => {
+    const fieldElement = document.querySelector(`[name="${fieldName}"]`);
+    if (fieldElement) {
+      const valid = validateField(fieldName, fieldElement.value);
+      if (!valid) isValid = false;
+    }
+  });
+
+  return isValid;
+}
+
+// Event handlers
+function setupValidation() {
+  // Add input event listeners for real-time validation
+  const fieldsToValidate = ['email', 'occupation', 'age', 'gender_identity', 'pronoun',
+                          'legal_name', 'birth_name', 'native_name', 'home_address',
+                          'emergency_contact', 'phone_number'];
+
+  fieldsToValidate.forEach(fieldName => {
+    const fieldElement = document.querySelector(`[name="${fieldName}"]`);
+    if (fieldElement) {
+      // Validate on input (with debounce for better UX)
+      let timeout;
+      fieldElement.addEventListener('input', function() {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => {
+          validateField(fieldName, this.value);
+        }, 300);
+      });
+
+      // Validate on blur
+      fieldElement.addEventListener('blur', function() {
+        validateField(fieldName, this.value);
+      });
+    }
+  });
+
+  // Form submission validation
+  const form = document.querySelector('form');
+  if (form) {
+    form.addEventListener('submit', function(e) {
+      if (!validateForm()) {
+        e.preventDefault();
+        // Scroll to first error
+        const firstError = document.querySelector('.field-error');
+        if (firstError) {
+          firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+        return false;
+      }
+    });
+  }
+}
+
+// Initialize validation when DOM is loaded
+document.addEventListener('DOMContentLoaded', function() {
+  setupValidation();
+});
+</script>
+{% endblock %}
+
+{% endblock %}
